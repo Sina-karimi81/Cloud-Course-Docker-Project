@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  redis:
+    image: ghcr.io/aut-cloud-computing-fall-2024/redis:latest
+    container_name: redis_container
+    networks:
+      - cloud-phase-one
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  spring-backend:
+    build:
+      context: .  # Assuming the Dockerfile for the Spring Boot app is in the current directory
+    container_name: spring_container
+    depends_on:
+      - redis
+    networks:
+      - cloud-phase-one
+    ports:
+      - "8080:8080"
+
+networks:
+  cloud-phase-one:
+    driver: bridge
+
+volumes:
+  redis_data:
