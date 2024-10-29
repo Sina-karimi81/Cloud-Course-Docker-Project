@@ -1,7 +1,7 @@
 FROM openjdk:17-jdk-slim-buster as builder
 WORKDIR /build
 COPY . .
-RUN ./mvnw clean package -Dskiptests
+RUN chmod +x ./mvnw && ./mvnw clean package -Dskiptests
 
 FROM openjdk:17-jdk-slim-buster
 WORKDIR /app
