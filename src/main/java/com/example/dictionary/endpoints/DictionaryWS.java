@@ -19,7 +19,7 @@ public class DictionaryWS {
         this.dictionaryService = dictionaryService;
     }
 
-    @GetMapping("/definition")
+    @GetMapping("/word")
     public ResponseEntity<DefinitionResponse> getDefinition(@Param("word") String word) {
         DefinitionResponse definition = dictionaryService.getDefinition(word);
         log.info("the value returned from the definition api is {}", definition);
