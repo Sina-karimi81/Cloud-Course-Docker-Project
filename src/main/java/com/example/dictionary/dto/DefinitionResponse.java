@@ -13,5 +13,6 @@ public class DefinitionResponse {
     private SourceType sourceType;
     private String definition;
     private String word;
+    private String hostName;
 
 }

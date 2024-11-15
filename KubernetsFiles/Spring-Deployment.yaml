@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: demo-ns
+  name: dictionary-deployment
+  labels:
+    app: spring-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spring-backend
+  template:
+    metadata:
+      labels:
+        app: spring-backend
+    spec:
+      containers:
+        - name: dictionary-container
+          image: sinak2002/dictionary:final
+          imagePullPolicy: Never # to make kuber pull images from local not dockerhub
+          ports:
+            - containerPort: 8080
+          env:
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: REDIS_PORT
+            - name: RANDOM_WORD_API
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: RANDOM_WORD_API
+            - name: DICTIONARY_API
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: DICTIONARY_API
+            - name: API_NINJA_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secrets
+                  key: API_NINJA_API_KEY
+      imagePullSecrets:
+        - name: regcred

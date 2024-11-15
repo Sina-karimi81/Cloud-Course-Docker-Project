@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: demo-ns
+data:
+  # Redis configuration properties
+  REDIS_HOST: "redis-service"
+  REDIS_PORT: "6379"
+
+  # Third-party API configuration
+  RANDOM_WORD_API: "https://api.api-ninjas.com/v1/randomword"
+  DICTIONARY_API: "https://api.api-ninjas.com/v1/dictionary"

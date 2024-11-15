@@ -1,6 +1,7 @@
 package com.example.dictionary.endpoints;
 
 import com.example.dictionary.dto.DefinitionResponse;
+import com.example.dictionary.dto.RandomWordResponse;
 import com.example.dictionary.service.DictionaryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
@@ -31,14 +32,10 @@ public class DictionaryWS {
     }
 
     @GetMapping("/random")
-    public ResponseEntity<String> getRandomWord() {
-        String randomWord = dictionaryService.getRandomWord();
+    public ResponseEntity<RandomWordResponse> getRandomWord() {
+        RandomWordResponse randomWord = dictionaryService.getRandomWord();
         log.info("the value returned from the random word api is {}", randomWord);
-        if (randomWord != null) {
-            return ResponseEntity.ok(randomWord);
-        } else {
-            return new ResponseEntity<>("The API returned nothing", HttpStatus.SERVICE_UNAVAILABLE);
-        }
+        return ResponseEntity.ok(randomWord);
     }
 
 }

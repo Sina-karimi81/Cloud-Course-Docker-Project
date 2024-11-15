@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: demo-ns
+  name: redis-deployment
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis-container
+          image: ghcr.io/aut-cloud-computing-fall-2024/redis:latest
+          ports:
+            - containerPort: 6379
+          volumeMounts:
+           - name: storage
+             mountPath: /data
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: pvc-storage
